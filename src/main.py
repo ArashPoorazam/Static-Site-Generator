@@ -1,20 +1,10 @@
 from textnode import TextNode, TextType
 
 def main():
-    test_A = TextNode("salam", "Bold")
-    test_B = TextNode("salam", "Bold")
-    test_C = TextNode("slm", "Bold")
+    node = TextNode("This is a text node", TextType.BOLD, "https://www.google.com")
+    print(node)
 
-    print(test_A == test_B)
-    print(test_B == test_C)
-
-    print(test_A)
-
-
-
-
-
-
+    
 
 if __name__ == "__main__":
     main()
