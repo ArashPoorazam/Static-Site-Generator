@@ -3,6 +3,18 @@ from textnode import TextType, TextNode
 from htmlnode import LeafNode
 
 
+# core
+# function that can convert a raw string of markdown-flavored text into a list of TextNode objects.
+def text_to_textnodes(text):
+    nodes = [TextNode(text, TextType.TEXT)]
+    nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
+    nodes = split_nodes_delimiter(nodes, "_", TextType.ITALIC)
+    nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)
+    nodes = split_nodes_image(nodes)
+    nodes = split_nodes_link(nodes)
+    return nodes
+
+
 # convert text node to the right html node
 def text_node_to_html_node(text_node):
         match text_node.text_type:
@@ -22,8 +34,6 @@ def text_node_to_html_node(text_node):
                 raise Exception("This type has not defined in dataset")
             
 
-# does not work on nested markdowns
-# with the right delimiter like ** or _ or etc
 # split text-nodes like this --> This is text with a **bolded phrase** in the middle --> into 3 html node
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
@@ -46,7 +56,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     return new_nodes
 
 
-# split nodes image
+# takes a text containing a image and splits it into segregated text-nodes
 def split_nodes_image(old_nodes):
     new_nodes = []
     for old_node in old_nodes:
@@ -77,7 +87,7 @@ def split_nodes_image(old_nodes):
     return new_nodes
 
 
-# split nodes link
+# takes a text containing a link and splits it into segregated text-nodes
 def split_nodes_link(old_nodes):
     new_nodes = []
     for old_node in old_nodes:
@@ -106,7 +116,6 @@ def split_nodes_link(old_nodes):
 def extract_markdown_images(text):
     pattern = r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
     matches = re.findall(pattern, text)
-    print("MATCHES:", matches)
     return matches
 
 
@@ -114,6 +123,5 @@ def extract_markdown_images(text):
 def extract_markdown_links(text):
     pattern = r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)"
     matches = re.findall(pattern, text)
-    print("MATCHES:", matches)
     return matches
     
