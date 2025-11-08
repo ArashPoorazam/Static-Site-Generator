@@ -38,20 +38,19 @@ def generate_page(from_path, template_path, dest_path):
 def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
     current_dir = dir_path_content
     ls = os.listdir(current_dir)
-
     for item in ls:
         item_path = current_dir + f"/{item}"
         if item.endswith(".md"):
-            print(f"generate_page: ({item_path}, {template_path}, {dest_dir_path})")
+            new_dest_path = dest_dir_path + "/index.html"
             generate_page(
                 item_path,
                 template_path,
-                dest_dir_path
+                new_dest_path 
             )
         elif os.path.isdir(item_path):
-            new_dest_dir_path = dest_dir_path + f"/{item}"
-            print("make directory:", new_dest_dir_path)
-            os.mkdir(new_dest_dir_path)
-            generate_pages_recursive(item_path, template_path, new_dest_dir_path)
+            new_dest_path = dest_dir_path + f"/{item}"
+            os.mkdir(new_dest_path)
+            print("made directory:", new_dest_path)
+            generate_pages_recursive(item_path, template_path, new_dest_path)
         else:
             continue
