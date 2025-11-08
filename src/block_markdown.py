@@ -4,6 +4,16 @@ from textnode import TextNode, TextType
 from inline_markdown import text_to_textnodes, text_node_to_html_node
 
 
+# core
+def markdown_to_html_node(markdown):
+    blocks = markdown_to_blocks(markdown)
+    children = []
+    for block in blocks:
+        html_node = block_to_html_node(block)
+        children.append(html_node)
+    return ParentNode("div", children, None)
+
+
 # types of block
 class BlockType(Enum):
     PARAGRAPH = "paragraph"
@@ -51,15 +61,6 @@ def markdown_to_blocks(markdown):
             continue
         list_blocks.append(block.strip())
     return list_blocks
-
-
-def markdown_to_html_node(markdown):
-    blocks = markdown_to_blocks(markdown)
-    children = []
-    for block in blocks:
-        html_node = block_to_html_node(block)
-        children.append(html_node)
-    return ParentNode("div", children, None)
 
 
 def block_to_html_node(block):

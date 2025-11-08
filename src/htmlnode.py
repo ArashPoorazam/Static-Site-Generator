@@ -40,7 +40,7 @@ class ParentNode(HTMLNode):
             formated_html = ""
             for child in self.children:
                 formated_html += child.to_html()
-            return f"<{self.tag}{'' + self.props_to_html() if self.props else ''}>{formated_html}</{self.tag}>"
+            return f"<{self.tag}{' ' + self.props_to_html() if self.props else ''}>{formated_html}</{self.tag}>"
 
 
 class LeafNode(HTMLNode):
@@ -53,5 +53,5 @@ class LeafNode(HTMLNode):
         elif self.tag is None:
             return self.value
         else:
-            return f"<{self.tag}{'' + self.props_to_html() if self.props else ''}>{self.value}</{self.tag}>"
+            return f"<{self.tag}{' ' + self.props_to_html() if self.props else ''}>{self.value}</{self.tag}>"
     
