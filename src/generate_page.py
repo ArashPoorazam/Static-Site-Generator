@@ -29,7 +29,7 @@ def generate_page(basepath, from_path, template_path, dest_path):
     # replace title and content ( HTML ) in template 
     template = template.replace("{{ Title }}", title).replace("{{ Content }}", html)
     # make it able to be hosted on github
-    template = template.replace('href="/', 'href="{' + basepath + '}').replace('src="/', 'src="{' + basepath + '}')
+    template = template.replace('href="/', f'href="{basepath}').replace('src="/', f'src="{basepath}')
 
     # create a new generated html file
     with open(dest_path, "w") as w:
