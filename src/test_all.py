@@ -2,8 +2,10 @@ import unittest
 from textnode import TextNode, TextType
 from htmlnode import HTMLNode, ParentNode, LeafNode
 from textnode import TextNode, TextType
+from generate_page import extract_title
 from inline_markdown import *
 from block_markdown import *
+
 
 
 # Test Text-Node
@@ -549,6 +551,21 @@ the **same** even with inline stuff
             html,
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
-        
+
+
+class TestMain(unittest.TestCase):
+    def test_extract_title(self):
+        markdown = """
+        # Hello 
+        RegExr was created by gskinner.com.
+
+        Edit the Expression & Text to see matches. Roll over matches or the expression for details. 
+        PCRE & JavaScript flavors of RegEx are supported. Validate your expression with Tests mode.
+        """
+        output_goal = "Hello"
+        matches = extract_title(markdown)
+        self.assertEqual(matches, output_goal)
+
+
 if __name__ == "__main__":
     unittest.main()
